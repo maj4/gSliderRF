@@ -12,9 +12,9 @@ dt = 4e-3; % ms, final dwell time of pulses
 T = 11; % ms, pulse duration of gSlider pulse; other pulse duration will be tbOther/tbG*T
 slThick = 3.3; % mm, gSlider slice thickness
 otherThickFactor = 1.15; % factor to increase slice thickness of non-gSlider pulse
-DFTphs = true; % do DFT phases
+DFTphs = false; % do DFT phases
 cancelAlphaPhs = true; % Design the excitation pulse's beta to cancel its associated alpha phase
-doRootFlip = false; % root-flip the non-encoding pulse,
+doRootFlip = true; % root-flip the non-encoding pulse,
 % and design the gSlider pulses to cancel the root-flipped phase profile.
 % This requires that the non-encoding pulse have lower tb than the encoding
 % pulse. Ideally, the non-encoding pulse should have 2x lower tb than the encoding pulse,
@@ -233,6 +233,11 @@ for ii = 1:G
 end
 Tother = T*tbOther/tbG/otherThickFactor;
 NoutOther = round(Tother/dt);
+
+%%%%%%Martin%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 rfOtherOut = interp1((0:N)./N*Tother,[rfOther, rfOther(end)],(0:NoutOther-1)*dt,'spline',0);
 rfOtherOut = rfOtherOut./sum(abs(rfOtherOut))*sum(abs(rfOther));
 
